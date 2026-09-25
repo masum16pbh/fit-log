@@ -1,3 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+@theme {
+  --color-limon: #c2f800;
+}
