@@ -10,7 +10,8 @@ export default async function ExecDetailPage({ params }: { params: Promise<{ exe
 
     return (
         <>
-            <div className="flex gap-3">
+        <div className="container mx-auto ">
+            <div className="flex flex-col gap-3 items-center md:flex md:flex-row">
                 {/* left */}
                 <div>
                     <Image src={exec.image}
@@ -84,6 +85,7 @@ export default async function ExecDetailPage({ params }: { params: Promise<{ exe
                     </div>
 
                 </div>
+            </div>
             </div>
 
         </>

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 // import { Oswald } from "next/font/google";
 import "./globals.css";
 import NavBar from "./components/navbar";
+import Footer from "./components/footere";
 
 
 // const oswald = Oswald({
@@ -31,10 +32,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className='bg-black text-white'
     >
-      
-      <body  className=''>
+
+      <body className=''>
         <NavBar></NavBar>
-        {children}</body>
+        {children}
+        <Footer></Footer>
+      </body>
     </html>
   );
 }

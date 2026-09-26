@@ -12,13 +12,17 @@ export default function ExeciseCard({exer}:{exer:IExercise}){
 return(
     <>
     <Link href={`/works/${exer.id}`} className="block">
-    <div className="card shadow-sm">
-  <figure>
+    <div className="bg-[#15171D] border border-[#15171D] rounded-2xl">
+  <div className="relative w-full h-40 "> {/*image div*/}
+    
     <Image src={exer.image} alt={exer.name}
-    width={450}
-    height={80}
-    ></Image>
-  </figure>
+    
+     fill
+      className="object-cover rounded-t-2xl"
+    >
+      </Image> 
+  </div>
+  
   <div className="card-body">
   <div className="flex flex-wrap gap-2">
   {exer.muscleGroups.map((muscle) => (

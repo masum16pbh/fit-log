@@ -4,7 +4,7 @@ import ExercisePage from "./works/page";
 export default function Home(){
   return(
     <>
-    <div className="container">
+    <div className="container mx-auto">
       <Baner></Baner>
       <h2>THE LIBRARY</h2>
       <ExercisePage></ExercisePage>
