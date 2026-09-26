@@ -11,8 +11,8 @@ export default async function ExercisePage(){
     const exercises:IExercise[] = await getExercise()
     return(
         <>
-        <p>{exercises.length}</p>
-        <div>
+       
+        <div className="grid md:grid-cols-3 gap-2 items-center">
             {exercises.map(exe =><ExeciseCard exer={exe} key={exe.id}></ExeciseCard>) }
         </div>
         </>

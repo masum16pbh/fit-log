@@ -6,6 +6,7 @@ export default function Home(){
     <>
     <div className="container">
       <Baner></Baner>
+      <h2>THE LIBRARY</h2>
       <ExercisePage></ExercisePage>
     </div>
     </>
