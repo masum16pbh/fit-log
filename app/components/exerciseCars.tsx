@@ -4,7 +4,7 @@ import Image from "next/image";
 import { BiTimeFive } from "react-icons/bi";
 import { BiStar } from "react-icons/bi";
 import { BiSolidHot } from "react-icons/bi";
-import { GiBurningEmbers } from "react-icons/gi";
+
 
 
 

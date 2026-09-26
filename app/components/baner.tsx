@@ -3,7 +3,7 @@ import baner from '../../public/banner.png'
 export default function Baner(){
     return(
         <>
-     <div className='flex justify-between container mx-auto'>
+     <div className='container mx-auto flex justify-between '>
   <div className="flex">
 
     {/* Left Content */}
