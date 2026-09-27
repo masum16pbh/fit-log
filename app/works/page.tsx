@@ -12,7 +12,7 @@ export default async function ExercisePage(){
     return(
         <>
        
-        <div className=" grid md:grid-cols-3 gap-4 items-center">
+        <div className="container mx-auto grid md:grid-cols-3 gap-4 items-center ">
             {exercises.map(exe =><ExeciseCard exer={exe} key={exe.id}></ExeciseCard>) }
         </div>
         </>
