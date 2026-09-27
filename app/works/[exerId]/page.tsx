@@ -1,7 +1,9 @@
+import AddSaveBtn from "@/app/components/execDetels/saveBtn";
+import AddTodayPlanBtn from "@/app/components/execDetels/todayBtn";
 import { IExercise } from "@/app/type";
 import Image from "next/image";
-import { BiBookmark } from "react-icons/bi";
-import { LuCalendarPlus2 } from "react-icons/lu";
+
+
 export default async function ExecDetailPage({ params }: { params: Promise<{ exerId: string }> }) {
     const { exerId } = await params;
     console.log(exerId); // "3"
@@ -81,8 +83,8 @@ export default async function ExecDetailPage({ params }: { params: Promise<{ exe
                             </ol>
                         </div>
                         <div className="flex gap-2">
-                            <button className="btn bg-limon"> <LuCalendarPlus2 /> Add to today's plan</button>
-                            <button className="btn bg-[#1E2330] text-white border-[#374151]"> <BiBookmark /> Save for later</button>
+                            <AddTodayPlanBtn exec={exec}></AddTodayPlanBtn>
+                            <AddSaveBtn exec = {exec}></AddSaveBtn>
                         </div>
 
                     </div>

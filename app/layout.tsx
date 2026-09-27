@@ -4,6 +4,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavBar from "./components/navbar";
 import Footer from "./components/footere";
+import PlanProvider from "@/contexts/todayContext";
+import { ToastContainer } from "react-toastify";
 
 
 // const oswald = Oswald({
@@ -34,9 +36,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
 
       <body className=''>
+        <PlanProvider>
+          
         <NavBar></NavBar>
         {children}
         <Footer></Footer>
+         <ToastContainer />  {/* for tosat put it on root "~" :) */}
+        </PlanProvider>
       </body>
     </html>
   );
