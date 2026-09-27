@@ -3,6 +3,8 @@
 import { usePlan } from "@/contexts/todayContext"
 import { useState } from "react"
 import TodayPlanCard from "../components/plans/todayPlanCard"
+import PlanCard from "../components/plans/planCard"
+import { exec } from "child_process"
 
 export default function MyPlan() {
     const {todayPlan,savePlan } = usePlan()
@@ -10,6 +12,23 @@ export default function MyPlan() {
     const handleTabChange =(tab:"tab1"|"tab2")=>{
         setActiveTab(tab)
 
+    }
+    const TodayPlancard =()=> {
+        const { todayPlan } = usePlan()
+        return (
+            <div className="w-full">
+            {todayPlan.map((exec) =>{
+                return <div className="p-2 m-2 flex items-center  justify-between gap-20  w-full border border-gray-100 rounded ">
+                    <PlanCard {...exec} key={exec.id}></PlanCard>
+                    <div className="flex items-center justify-end gap-4">
+                        <button className="cursor-pointer px-3 py[-4px] bg-gray-600 rounded-2xl ">view</button>
+                        <button className="cursor-pointer px-3 bg-limon rounded-2xl text-black">mark as done</button>
+                        <button className="cursor-pointer" >X</button>
+                    </div>
+                </div>
+            })}
+            </div>
+        )
     }
 
     return (
@@ -19,7 +38,30 @@ export default function MyPlan() {
                     <h1>MY PLAN</h1>
                     <p>Cap of five lifts for today. Finish them, then load more.</p>
                 </div>
-                <div></div>
+                <div className="grid grid-cols-3 border p-3 rounded ">
+                    <section>
+                        <p>Exercises</p>
+                        <h2>{
+                            activeTab==="tab1"?todayPlan.length: savePlan.length
+                            }</h2>
+                    </section>
+                    <section>
+                        <p>Minutes</p>
+                        <h2>
+                            {activeTab ==='tab1'? todayPlan.reduce((total,exec)=>total+exec.duration,0)
+                            :
+                            savePlan.reduce((total,exec)=>total+exec.duration,0) }
+                        </h2>
+                    </section>
+                    <section>
+                        <p>Calories</p>
+                        <h2>
+                            {activeTab==="tab1"? todayPlan.reduce((total,exec)=>total+exec.caloriesBurned,0)
+                            :
+                            savePlan.reduce((total,exec)=>total+exec.caloriesBurned,0) }
+                        </h2>
+                    </section>
+                </div>
                 <div className="flex">
                     {/* name of each tab group should be unique */}
                     {/* name of each tab group should be unique */}
@@ -38,7 +80,7 @@ export default function MyPlan() {
                 </div>
                 <div>
                     {activeTab==="tab1"?
-                    <TodayPlanCard></TodayPlanCard>
+                    <TodayPlancard></TodayPlancard>
                     :
                     ""
                     }

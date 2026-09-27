@@ -20,8 +20,8 @@ export default function NavBar() {
                     >My plan</Link>
                 </div>
                 <div className='flex gap-3'>
-                    <p>Plan {todayPlan.length}</p>
-                    <p>Save {savePlan.length}</p>
+                    <Link href='/myPlan'><p>Plan {todayPlan.length}</p></Link>
+                    <Link href='/myPlan'><p>Save {savePlan.length}</p></Link>
                 </div>
             </nav>
         </>
