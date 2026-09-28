@@ -8,11 +8,16 @@ import { exec } from "child_process"
 import Link from "next/link"
 
 export default function MyPlan() {
-    const { todayPlan, savePlan } = usePlan()
+    const { todayPlan, savePlan,setTodayPlan,setSavePlan } = usePlan()
     const [activeTab, setActiveTab] = useState<"tab1" | "tab2">("tab1")
     const handleTabChange = (tab: "tab1" | "tab2") => {
         setActiveTab(tab)
 
+    }
+
+    const handelDeleteFromToday=(id:number)=>{
+        setTodayPlan((oldPlan)=>oldPlan.filter((exec)=>exec.id !== id))
+    
     }
     const TodayPlancard = () => {
         const { todayPlan } = usePlan()
@@ -24,7 +29,7 @@ export default function MyPlan() {
                         <div className="flex items-center justify-end gap-4">
                            <Link href={`/works/${exec.id}`} className="cursor-pointer px-3  bg-gray-600 rounded-2xl ">view</Link>
                             <button className="cursor-pointer px-3 bg-limon rounded-2xl text-black">mark as done</button>
-                            <button className="cursor-pointer" >X</button>
+                            <button className="cursor-pointer" onClick={()=>handelDeleteFromToday(exec.id)} >X</button> 
                         </div>
                     </div>
                 })}
