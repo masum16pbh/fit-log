@@ -8,28 +8,34 @@ import { exec } from "child_process"
 import Link from "next/link"
 
 export default function MyPlan() {
-    const { todayPlan, savePlan,setTodayPlan,setSavePlan } = usePlan()
+    const { todayPlan, savePlan, setTodayPlan, setSavePlan } = usePlan()
     const [activeTab, setActiveTab] = useState<"tab1" | "tab2">("tab1")
     const handleTabChange = (tab: "tab1" | "tab2") => {
         setActiveTab(tab)
 
     }
 
-    const handelDeleteFromToday=(id:number)=>{
-        setTodayPlan((oldPlan)=>oldPlan.filter((exec)=>exec.id !== id))
-    
+    const handelDeleteFromToday = (id: number) => {
+        setTodayPlan((oldPlan) => oldPlan.filter((exec) => exec.id !== id))
+
+    }
+     const [complited, setComplited] = useState<number[]>([])
+    const handelTogolDone = (id: number) => {
+        setComplited((old) => old.includes(id) ? old.filter((item) => item !== id) : [...old, id])
     }
     const TodayPlancard = () => {
-        const { todayPlan } = usePlan()
+        
         return (
             <div className="w-full">
                 {todayPlan.map((exec) => {
+                const isDone = complited.includes(exec.id) //position Improtent
+
                     return <div key={exec.id} className="p-2 m-2 flex items-center  justify-between gap-20  w-full border border-gray-100 rounded ">
                         <PlanCard {...exec} key={exec.id}></PlanCard>
                         <div className="flex items-center justify-end gap-4">
-                           <Link href={`/works/${exec.id}`} className="cursor-pointer px-3  bg-gray-600 rounded-2xl ">view</Link>
-                            <button className="cursor-pointer px-3 bg-limon rounded-2xl text-black">mark as done</button>
-                            <button className="cursor-pointer" onClick={()=>handelDeleteFromToday(exec.id)} >X</button> 
+                            <Link href={`/works/${exec.id}`} className="cursor-pointer px-3  bg-gray-600 rounded-2xl ">View Details</Link>
+                            <button className="cursor-pointer px-3 bg-limon rounded-2xl text-black" onClick={() => handelTogolDone(exec.id)}>{isDone ? "✓ Done" : "Mark as Done"}</button>
+                            <button className="cursor-pointer" onClick={() => handelDeleteFromToday(exec.id)} >X</button>
                         </div>
                     </div>
                 })}
