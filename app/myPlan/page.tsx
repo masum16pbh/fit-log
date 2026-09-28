@@ -19,13 +19,18 @@ export default function MyPlan() {
         setTodayPlan((oldPlan) => oldPlan.filter((exec) => exec.id !== id))
 
     }
+
+     const handelDeleteFromSave = (id: number) => {
+        setSavePlan((oldPlan) => oldPlan.filter((exec) => exec.id !== id))
+
+    }
      const [complited, setComplited] = useState<number[]>([])
     const handelTogolDone = (id: number) => {
         setComplited((old) => old.includes(id) ? old.filter((item) => item !== id) : [...old, id])
     }
     const TodayPlancard = () => {
-        
         return (
+            todayPlan.length>0?
             <div className="w-full">
                 {todayPlan.map((exec) => {
                 const isDone = complited.includes(exec.id) //position Improtent
@@ -39,6 +44,39 @@ export default function MyPlan() {
                         </div>
                     </div>
                 })}
+            </div>
+            :
+            <div className="flex flex-col items-center text-center border-0 bg-[#101216] rounded py-5">
+             <h2>NOTHING HERE YET</h2>
+             <p>Browse the library and add a lift to get today moving.</p>
+             <Link href={'/'} className="p-1.5 px-3 rounded-2xl text-black inlie-block mt-3.5
+              bg-limon">'Go to workouts'</Link>   
+            </div>
+        )
+    }
+
+    const SavePlancard = () => {
+        return (
+            savePlan.length>0?
+            <div className="w-full">
+                {savePlan.map((exec) => {
+                const isDone = complited.includes(exec.id) //position Improtent
+
+                    return <div key={exec.id} className="p-2 m-2 flex items-center  justify-between gap-20  w-full border border-gray-100 rounded ">
+                        <PlanCard {...exec} key={exec.id}></PlanCard>
+                        <div className="flex items-center justify-end gap-4">
+                            <Link href={`/works/${exec.id}`} className="cursor-pointer px-3  bg-gray-600 rounded-2xl ">View Details</Link>
+                            <button className="cursor-pointer" onClick={() => handelDeleteFromSave(exec.id)} >X</button>
+                        </div>
+                    </div>
+                })}
+            </div>
+            :
+            <div className="flex flex-col items-center text-center border-0 bg-[#101216] rounded py-5">
+             <h2>NOTHING HERE YET</h2>
+             <p>Browse the library and add a lift to get today moving.</p>
+             <Link href={'/'} className="p-1.5 px-3 rounded-2xl text-black inlie-block mt-3.5
+              bg-limon">Go to workouts</Link>   
             </div>
         )
     }
@@ -94,7 +132,7 @@ export default function MyPlan() {
                     {activeTab === "tab1" ?
                         <TodayPlancard></TodayPlancard>
                         :
-                        ""
+                        <SavePlancard></SavePlancard>
                     }
                 </div>
             </section>
