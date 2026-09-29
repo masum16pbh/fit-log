@@ -2,10 +2,12 @@
 import { IExercise } from "@/app/type";
 import { usePlan } from "@/contexts/todayContext";
 import { BiBookmark } from "react-icons/bi";
+import { toast } from "react-toastify";
 
 export default function AddSaveBtn({ exec }: { exec: IExercise }) {
     const { savePlan, setSavePlan } = usePlan()
     const handelSave = () => {
+        toast.success(`${exec.name} is Saved`)
         setSavePlan([...savePlan, exec])
     }
     const added = savePlan.some((item)=>item.id===exec.id)

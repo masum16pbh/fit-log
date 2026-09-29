@@ -3,11 +3,13 @@ import { IExercise } from "@/app/type";
 import { usePlan } from "@/contexts/todayContext";
 
 import { LuCalendarPlus2 } from "react-icons/lu";
+import { toast } from "react-toastify";
 
 export default function AddTodayPlanBtn({exec}:{exec:IExercise}){
     const {todayPlan,setTodayPlan} = usePlan()
     const handelToDay=()=>{
         setTodayPlan([...todayPlan,exec])
+        toast.success(`${exec.name} Added in Today's Plan`)
     }
     const added = todayPlan.some((item)=>item.id===exec.id)
     return(

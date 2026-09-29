@@ -4,8 +4,10 @@ import { usePlan } from "@/contexts/todayContext"
 import { useState } from "react"
 
 import PlanCard from "../components/plans/planCard"
-import { exec } from "child_process"
+// import { exec } from "child_process"
 import Link from "next/link"
+import { toast } from "react-toastify"
+import { IExercise } from "../type"
 
 export default function MyPlan() {
     const { todayPlan, savePlan,complited, setTodayPlan, setSavePlan, setComplited } = usePlan()
@@ -16,14 +18,17 @@ export default function MyPlan() {
     }
 
     const handelDeleteFromToday = (id: number) => {
+        const item:IExercise =todayPlan.find((item) => item.id === id)
         setTodayPlan((oldPlan) => oldPlan.filter((exec) => exec.id !== id))
         setComplited((prevComplited) =>prevComplited.filter((Eid)=>Eid !== id))
+        toast.warn(`${item.name} is deleted from Today plan`)
 
     }
 
      const handelDeleteFromSave = (id: number) => {
+        const item:IExercise =savePlan.find((item) => item.id === id)
         setSavePlan((oldPlan) => oldPlan.filter((exec) => exec.id !== id))
-
+        toast.warn(`${item.name} is deleted from Saved plan`)
     }
    
     const handelTogolDone = (id: number) => {
@@ -36,9 +41,9 @@ export default function MyPlan() {
                 {todayPlan.map((exec) => {
                 const isDone = complited.includes(exec.id) //position Improtent
 
-                    return <div key={exec.id} className="p-2 m-2 flex items-center  justify-between gap-20  w-full border border-gray-100 rounded ">
+                    return <div key={exec.id} className="p-2 m-2 md:flex items-center  justify-between gap-20  w-full border border-gray-100 rounded ">
                         <PlanCard {...exec} key={exec.id}></PlanCard>
-                        <div className="flex items-center justify-end gap-4">
+                        <div className="flex items-center justify-center md:justify-end gap-4 my-4">
                             <Link href={`/works/${exec.id}`} className="cursor-pointer px-3  bg-gray-600 rounded-2xl ">View Details</Link>
                             <button className="cursor-pointer px-3 bg-limon rounded-2xl text-black" onClick={() => handelTogolDone(exec.id)}>{isDone ? "✓ Done" : "Mark as Done"}</button>
                             <button className="cursor-pointer" onClick={() => handelDeleteFromToday(exec.id)} >X</button>

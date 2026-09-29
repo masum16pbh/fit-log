@@ -8,7 +8,7 @@ export default function PlanCard(exec:IExercise){
     return(
         <>
         <div className="flex gap-2 flex-col md:flex-row md:items-center">
-            <div className="relative w-45 h-25 "> {/*vary importent for image*/}
+            <div className="relative justify-center w-45 h-25 mx-auto md:mx-0 "> {/*vary importent for image*/}
                 
                 <Image src={exec.image} alt={exec.name}
                 
@@ -17,10 +17,10 @@ export default function PlanCard(exec:IExercise){
                 >
                   </Image> 
               </div>
-            <div>
+            <div className="text-center md:text-start  ">
                 <h2>{exec.name}</h2>
                 <p>{exec.equipment}</p>
-                <div className="flex justify-self-start">
+                <div className="flex justify-center sd:justify-self-start">
                     <p className="flex gap-1 items-center"> <BiTimeFive /> {exec.duration} min</p>
                  <p className="flex gap-1 items-center"><BiSolidHot />{exec.caloriesBurned} kcal</p>
                      <p className="flex gap-1 items-center"> <BiStar /> {exec.rating} </p>
