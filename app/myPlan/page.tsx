@@ -10,7 +10,7 @@ import { toast } from "react-toastify"
 import { IExercise } from "../type"
 
 export default function MyPlan() {
-    const { todayPlan, savePlan,complited, setTodayPlan, setSavePlan, setComplited } = usePlan()
+    const { todayPlan, savePlan, complited, setTodayPlan, setSavePlan, setComplited } = usePlan()
     const [activeTab, setActiveTab] = useState<"tab1" | "tab2">("tab1")
     const handleTabChange = (tab: "tab1" | "tab2") => {
         setActiveTab(tab)
@@ -18,72 +18,83 @@ export default function MyPlan() {
     }
 
     const handelDeleteFromToday = (id: number) => {
-        const item:IExercise =todayPlan.find((item) => item.id === id)
+        const item: IExercise = todayPlan.find((item) => item.id === id)
         setTodayPlan((oldPlan) => oldPlan.filter((exec) => exec.id !== id))
-        setComplited((prevComplited) =>prevComplited.filter((Eid)=>Eid !== id))
+        setComplited((prevComplited) => prevComplited.filter((Eid) => Eid !== id))
         toast.warn(`${item.name} is deleted from Today plan`)
 
     }
 
-     const handelDeleteFromSave = (id: number) => {
-        const item:IExercise =savePlan.find((item) => item.id === id)
+    const handelDeleteFromSave = (id: number) => {
+        const {name} = savePlan.find((item) => item.id === id) ?? {name:'It'}
         setSavePlan((oldPlan) => oldPlan.filter((exec) => exec.id !== id))
-        toast.warn(`${item.name} is deleted from Saved plan`)
+        toast.warn(`${name} is deleted from Saved plan`)
     }
-   
+
     const handelTogolDone = (id: number) => {
-        setComplited((old) => old.includes(id) ? old.filter((item) => item !== id) : [...old, id])
-    }
+        const {name} = todayPlan.find((item) =>item.id === id)??{name:"It"}
+      
+        const Iscomplited = complited.some((Itemid)=> Itemid===id);
+        if(Iscomplited){
+            setComplited(complited.filter((Cid) => Cid !== id))
+            toast.error(`${name} mark as incomplited`)
+        }
+        else{
+            setComplited((old)=>[...old,id])
+            toast.success(`${name} id Done`)
+        }
+        
+        }
     const TodayPlancard = () => {
         return (
-            todayPlan.length>0?
-            <div className="w-full">
-                {todayPlan.map((exec) => {
-                const isDone = complited.includes(exec.id) //position Improtent
+            todayPlan.length > 0 ?
+                <div className="w-full">
+                    {todayPlan.map((exec) => {
+                        const isDone = complited.includes(exec.id) //position Improtent
 
-                    return <div key={exec.id} className="p-2 m-2 md:flex items-center  justify-between gap-20  w-full border border-gray-100 rounded ">
-                        <PlanCard {...exec} key={exec.id}></PlanCard>
-                        <div className="flex items-center justify-center md:justify-end gap-4 my-4">
-                            <Link href={`/works/${exec.id}`} className="cursor-pointer px-3  bg-gray-600 rounded-2xl ">View Details</Link>
-                            <button className="cursor-pointer px-3 bg-limon rounded-2xl text-black" onClick={() => handelTogolDone(exec.id)}>{isDone ? "✓ Done" : "Mark as Done"}</button>
-                            <button className="cursor-pointer" onClick={() => handelDeleteFromToday(exec.id)} >X</button>
+                        return <div key={exec.id} className="p-2 m-2 md:flex items-center  justify-between gap-20  w-full border border-gray-100 rounded ">
+                            <PlanCard {...exec} key={exec.id}></PlanCard>
+                            <div className="flex items-center justify-center md:justify-end gap-4 my-4">
+                                <Link href={`/works/${exec.id}`} className="cursor-pointer px-3  bg-gray-600 rounded-2xl ">View Details</Link>
+                                <button className="cursor-pointer px-3 bg-limon rounded-2xl text-black" onClick={() => handelTogolDone(exec.id)}>{isDone ? "✓ Done" : "Mark as Done"}</button>
+                                <button className="cursor-pointer" onClick={() => handelDeleteFromToday(exec.id)} >X</button>
+                            </div>
                         </div>
-                    </div>
-                })}
-            </div>
-            :
-            <div className="flex flex-col items-center text-center border-0 bg-[#101216] rounded py-5">
-             <h2>NOTHING HERE YET</h2>
-             <p>Browse the library and add a lift to get today moving.</p>
-             <Link href={'/'} className="p-1.5 px-3 rounded-2xl text-black inlie-block mt-3.5
-              bg-limon">Go to workouts</Link>   
-            </div>
+                    })}
+                </div>
+                :
+                <div className="flex flex-col items-center text-center border-0 bg-[#101216] rounded py-5">
+                    <h2>NOTHING HERE YET</h2>
+                    <p>Browse the library and add a lift to get today moving.</p>
+                    <Link href={'/'} className="p-1.5 px-3 rounded-2xl text-black inlie-block mt-3.5
+              bg-limon">Go to workouts</Link>
+                </div>
         )
     }
 
     const SavePlancard = () => {
         return (
-            savePlan.length>0?
-            <div className="w-full">
-                {savePlan.map((exec) => {
-                const isDone = complited.includes(exec.id) //position Improtent
+            savePlan.length > 0 ?
+                <div className="w-full">
+                    {savePlan.map((exec) => {
+                        const isDone = complited.includes(exec.id) //position Improtent
 
-                    return <div key={exec.id} className="p-2 m-2 flex items-center  justify-between gap-20  w-full border border-gray-100 rounded ">
-                        <PlanCard {...exec} key={exec.id}></PlanCard>
-                        <div className="flex items-center justify-end gap-4">
-                            <Link href={`/works/${exec.id}`} className="cursor-pointer px-3  bg-gray-600 rounded-2xl ">View Details</Link>
-                            <button className="cursor-pointer" onClick={() => handelDeleteFromSave(exec.id)} >X</button>
+                        return <div key={exec.id} className="p-2 m-2 flex items-center  justify-between gap-20  w-full border border-gray-100 rounded ">
+                            <PlanCard {...exec} key={exec.id}></PlanCard>
+                            <div className="flex items-center justify-end gap-4">
+                                <Link href={`/works/${exec.id}`} className="cursor-pointer px-3  bg-gray-600 rounded-2xl ">View Details</Link>
+                                <button className="cursor-pointer" onClick={() => handelDeleteFromSave(exec.id)} >X</button>
+                            </div>
                         </div>
-                    </div>
-                })}
-            </div>
-            :
-            <div className="flex flex-col items-center text-center border-0 bg-[#101216] rounded py-5">
-             <h2>NOTHING HERE YET</h2>
-             <p>Browse the library and add a lift to get today moving.</p>
-             <Link href={'/'} className="p-1.5 px-3 rounded-2xl text-black inlie-block mt-3.5
-              bg-limon">Go to workouts</Link>   
-            </div>
+                    })}
+                </div>
+                :
+                <div className="flex flex-col items-center text-center border-0 bg-[#101216] rounded py-5">
+                    <h2>NOTHING HERE YET</h2>
+                    <p>Browse the library and add a lift to get today moving.</p>
+                    <Link href={'/'} className="p-1.5 px-3 rounded-2xl text-black inlie-block mt-3.5
+              bg-limon">Go to workouts</Link>
+                </div>
         )
     }
 
@@ -118,10 +129,10 @@ export default function MyPlan() {
                         </h2>
                     </section>
                 </div>
-                <div className="flex">
+                <div className="flex justify-between gap-3 items-center">
                     {/* name of each tab group should be unique */}
                     {/* name of each tab group should be unique */}
-                    <div className="tabs tabs-box bg-[#151921] text-[#8A92A0]">
+                    <div className="tabs tabs-box bg-[#151921] text-[#8A92A0] ">
                         <input type="radio" name="my_tabs_1"
                             className="tab text-white bg-[#1F242D]"
                             aria-label="Today's plan"
@@ -132,6 +143,15 @@ export default function MyPlan() {
                             checked={activeTab === "tab2"}
                             onChange={() => handleTabChange("tab2")} />
 
+                    </div>
+                    <div className="flex gap-2 justify-end items-center whitespace-nowrap">
+                        <label>Sort By</label>
+                        <select defaultValue="Server location" className="select  bg-[#151921] text-[#8A92A0]">
+                            
+                            <option value={'duration'}>Duration</option>
+                            <option value={'cal'}>Calories</option>
+                            <option value={'rating'}>Rating</option>
+                        </select>
                     </div>
                 </div>
                 <div>
