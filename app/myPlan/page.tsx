@@ -12,6 +12,7 @@ import { IExercise } from "../type"
 export default function MyPlan() {
     const { todayPlan, savePlan, complited, setTodayPlan, setSavePlan, setComplited } = usePlan()
     const [activeTab, setActiveTab] = useState<"tab1" | "tab2">("tab1")
+    const [sortBy,setSortBy] = useState<'duration'|'cal'|'rating'>('duration')
     const handleTabChange = (tab: "tab1" | "tab2") => {
         setActiveTab(tab)
 
@@ -45,11 +46,29 @@ export default function MyPlan() {
         }
         
         }
+
+
+    const sortExec=(exerc:IExercise[]):IExercise[]=>{
+        const sortExec=[...exerc]
+        if(sortBy ==='duration'){
+            sortExec.sort((a,b)=>a.duration -b.duration)
+        }
+        else if(sortBy==='cal'){
+            sortExec.sort((a,b)=>b.caloriesBurned-a.caloriesBurned)
+        }
+        else{
+            sortExec.sort((a,b)=>b.rating-a.rating)
+        }
+        return sortExec
+    }
+
+    const sortTodayPlan = sortExec(todayPlan)
+    const sortSavePlan=sortExec(savePlan)
     const TodayPlancard = () => {
         return (
             todayPlan.length > 0 ?
                 <div className="w-full">
-                    {todayPlan.map((exec) => {
+                    {sortTodayPlan.map((exec) => {
                         const isDone = complited.includes(exec.id) //position Improtent
 
                         return <div key={exec.id} className="p-2 m-2 md:flex items-center  justify-between gap-20  w-full border border-gray-100 rounded ">
@@ -76,8 +95,8 @@ export default function MyPlan() {
         return (
             savePlan.length > 0 ?
                 <div className="w-full">
-                    {savePlan.map((exec) => {
-                        const isDone = complited.includes(exec.id) //position Improtent
+                    {sortSavePlan.map((exec) => {
+                        
 
                         return <div key={exec.id} className="p-2 m-2 flex items-center  justify-between gap-20  w-full border border-gray-100 rounded ">
                             <PlanCard {...exec} key={exec.id}></PlanCard>
@@ -97,6 +116,9 @@ export default function MyPlan() {
                 </div>
         )
     }
+
+
+    
 
     return (
         <>
@@ -146,8 +168,11 @@ export default function MyPlan() {
                     </div>
                     <div className="flex gap-2 justify-end items-center whitespace-nowrap">
                         <label>Sort By</label>
-                        <select defaultValue="Server location" className="select  bg-[#151921] text-[#8A92A0]">
-                            
+                        <select 
+                        value={sortBy}
+                        onChange={(e)=> setSortBy(e.target.value as "duration"|"cal"|"rating")}
+                        className="select  bg-[#151921] text-[#8A92A0]">
+                           
                             <option value={'duration'}>Duration</option>
                             <option value={'cal'}>Calories</option>
                             <option value={'rating'}>Rating</option>

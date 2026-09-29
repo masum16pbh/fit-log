@@ -7,3 +7,6 @@
 p{
   color: #9CA3AF;
 }
+h2{
+    font-family: var(--font-oswald);
+}

@@ -20,8 +20,9 @@ export default function NavBar() {
                     >My plan</Link>
                 </div>
                 <div className='flex gap-3'>
-                    <Link href='/myPlan'><p>Plan {todayPlan.length}</p></Link>
-                    <Link href='/myPlan'><p>Save {savePlan.length}</p></Link>
+                    <Link href='/myPlan' className='flex items-center gap-1'><p>Plan </p> <span className='inline-flex w-8 h-8 items-center justify-center rounded-full bg-limon text-black font-bold'>{todayPlan.length}</span></Link>
+                    <Link href='/myPlan' className='flex items-center gap-1'><p>Plan </p> <span className='inline-flex w-8 h-8 items-center justify-center rounded-full border border-slate-600'>{todayPlan.length}</span></Link>
+                    
                 </div>
             </nav>
         </>

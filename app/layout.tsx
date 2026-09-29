@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Oswald } from "next/font/google";
 // import { Oswald } from "next/font/google";
 import "./globals.css";
 import NavBar from "./components/navbar";
@@ -8,10 +8,10 @@ import PlanProvider from "@/contexts/todayContext";
 import { ToastContainer } from "react-toastify";
 
 
-// const oswald = Oswald({
-//   subsets: ["latin"],
-//   variable: "--font-oswald",
-// });
+const oswald = Oswald({
+  subsets: ["latin"],
+  variable: "--font-oswald",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
