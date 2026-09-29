@@ -2,13 +2,13 @@
 
 import { usePlan } from "@/contexts/todayContext"
 import { useState } from "react"
-import TodayPlanCard from "../components/plans/todayPlanCard"
+
 import PlanCard from "../components/plans/planCard"
 import { exec } from "child_process"
 import Link from "next/link"
 
 export default function MyPlan() {
-    const { todayPlan, savePlan, setTodayPlan, setSavePlan } = usePlan()
+    const { todayPlan, savePlan,complited, setTodayPlan, setSavePlan, setComplited } = usePlan()
     const [activeTab, setActiveTab] = useState<"tab1" | "tab2">("tab1")
     const handleTabChange = (tab: "tab1" | "tab2") => {
         setActiveTab(tab)
@@ -17,6 +17,7 @@ export default function MyPlan() {
 
     const handelDeleteFromToday = (id: number) => {
         setTodayPlan((oldPlan) => oldPlan.filter((exec) => exec.id !== id))
+        setComplited((prevComplited) =>prevComplited.filter((Eid)=>Eid !== id))
 
     }
 
@@ -24,7 +25,7 @@ export default function MyPlan() {
         setSavePlan((oldPlan) => oldPlan.filter((exec) => exec.id !== id))
 
     }
-     const [complited, setComplited] = useState<number[]>([])
+   
     const handelTogolDone = (id: number) => {
         setComplited((old) => old.includes(id) ? old.filter((item) => item !== id) : [...old, id])
     }
@@ -50,7 +51,7 @@ export default function MyPlan() {
              <h2>NOTHING HERE YET</h2>
              <p>Browse the library and add a lift to get today moving.</p>
              <Link href={'/'} className="p-1.5 px-3 rounded-2xl text-black inlie-block mt-3.5
-              bg-limon">'Go to workouts'</Link>   
+              bg-limon">Go to workouts</Link>   
             </div>
         )
     }
