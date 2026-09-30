@@ -19,10 +19,10 @@ export default function MyPlan() {
     }
 
     const handelDeleteFromToday = (id: number) => {
-        const item: IExercise = todayPlan.find((item) => item.id === id)
+        const {name} =todayPlan.find((item) =>item.id===id)??{name :"It"}
         setTodayPlan((oldPlan) => oldPlan.filter((exec) => exec.id !== id))
         setComplited((prevComplited) => prevComplited.filter((Eid) => Eid !== id))
-        toast.warn(`${item.name} is deleted from Today plan`)
+        toast.warn(`${name} is deleted from Today plan`)
 
     }
 
